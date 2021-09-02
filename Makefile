@@ -53,7 +53,7 @@ build: $(NODE_MODULES) $(DST_JS_FILES) $(DST_CSS_FILES) $(DST_SLIDEHTML_FILES) $
 
 package: $(current_dir).zip ## Prepare zip package for OCE upload
 
-serve: build ## watch project for file changes and rebuild with local server
+serve: build ## Watch project for file changes and rebuild with local server
 	@rm -f index.html
 	@touch index.html
 	@for slide in $(DST_DIR)/*.html; do \
