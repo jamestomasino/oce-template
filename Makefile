@@ -51,8 +51,8 @@ copy = cp $< $@
 mkdir = $(MUTE)mkdir -p $(dir $@)
 
 help:
-	@echo "targets:"
-	@awk -F '#' '/^[a-zA-Z0-9_-]+:.*?#/ { print $0 }' $(MAKEFILE_LIST) \
+	$(MUTE)echo "targets:"
+	$(MUTE)awk -F '#' '/^[a-zA-Z0-9_-]+:.*?#/ { print $0 }' $(MAKEFILE_LIST) \
 	| sed -n 's/^\(.*\): \(.*\)#\(.*\)/  \1|-\3/p' \
 	| column -t  -s '|'
 
@@ -61,9 +61,9 @@ build: $(NODE_MODULES) $(DST_JS_FILES) $(DST_CSS_FILES) $(DST_SLIDEHTML_FILES) $
 package: $(current_dir).zip ## Prepare zip package for OCE upload
 
 serve: build ## Watch project for file changes and rebuild with local server
-	@rm -f index.html
-	@touch index.html
-	@for slide in $(DST_DIR)/*.html; do \
+	$(MUTE)rm -f index.html
+	$(MUTE)touch index.html
+	$(MUTE)for slide in $(DST_DIR)/*.html; do \
 		n=$${slide#$(DST_DIR)/}; \
 		n=$${n%.html}; \
 		printf "<a href=\"%s\">%s</a><br>\\n" "$$slide" "$$n" >> index.html; \
