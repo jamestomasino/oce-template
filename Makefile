@@ -61,7 +61,9 @@ serve: build ## Watch project for file changes and rebuild with local server
 	@rm -f index.html
 	@touch index.html
 	@for slide in $(DST_DIR)/*.html; do \
-		printf "<a href=\"%s\">%s</a><br>\\n" "$$slide" "$$slide" >> index.html; \
+		n=$${slide#public/}; \
+		n=$${n%.html}; \
+		printf "<a href=\"%s\">%s</a><br>\\n" "$$slide" "$$n" >> index.html; \
 	done
 	bash -c "trap 'kill %1; rm -f index.html' EXIT; python3 -m http.server $(PORT) & ag -p ../.gitignore -l | entr make build"
 
