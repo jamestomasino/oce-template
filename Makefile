@@ -56,7 +56,10 @@ help:
 	| sed -n 's/^\(.*\): \(.*\)#\(.*\)/  \1|-\3/p' \
 	| column -t  -s '|'
 
-build: $(NODE_MODULES) $(DST_JS_FILES) $(DST_CSS_FILES) $(DST_SLIDEHTML_FILES) $(DST_SLIDEJPG_FILES) $(DST_SLIDEPDF_FILES) $(DST_FONTS_FILES) $(DST_IMAGES_FILES) $(DST_SLIDEJS_FILES) $(DST_JS_FILES) $(DST_SLIDECSS_FILES) ## Build all files to output folder
+build: $(NODE_MODULES) $(DST_JS_FILES) $(DST_CSS_FILES) $(DST_SLIDEHTML_FILES) \
+	$(DST_SLIDEJPG_FILES) $(DST_SLIDEPDF_FILES) $(DST_FONTS_FILES) \
+	$(DST_IMAGES_FILES) $(DST_SLIDEJS_FILES) $(DST_JS_FILES) \
+	$(DST_SLIDECSS_FILES) ## Build all files to output folder
 
 package: $(current_dir).zip ## Prepare zip package for OCE upload
 
