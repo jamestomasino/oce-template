@@ -5,6 +5,7 @@ current_dir:=$(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
 SRC_DIR ?= src
 DST_DIR ?= public
 NODE_MODULES ?= node_modules
+PORT ?= $(shell python -c 'from random import randint; print(randint(1023, 65535));')
 
 # Reference to node binaries without installing globally
 sass := $(NODE_MODULES)/.bin/sass
@@ -51,6 +52,14 @@ help:
 build: $(NODE_MODULES) $(DST_JS_FILES) $(DST_CSS_FILES) $(DST_SLIDEHTML_FILES) $(DST_SLIDEJPG_FILES) $(DST_SLIDEPDF_FILES) $(DST_FONTS_FILES) $(DST_IMAGES_FILES) $(DST_SLIDEJS_FILES) ## Build all files to output folder
 
 package: $(current_dir).zip ## Prepare zip package for OCE upload
+
+serve: build ## watch project for file changes and rebuild with local server
+	@rm -f index.html
+	@touch index.html
+	@for slide in $(DST_DIR)/*.html; do \
+		printf "<a href=\"%s\">%s</a><br>\\n" "$$slide" "$$slide" >> index.html; \
+	done
+	bash -c "trap 'kill %1; rm -f index.html' EXIT; python3 -m http.server $(PORT) & ag -p ../.gitignore -l | entr make build"
 
 clean: ## Clean project
 	rm -rf $(DST_DIR)
