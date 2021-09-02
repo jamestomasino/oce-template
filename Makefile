@@ -73,7 +73,7 @@ serve: build ## Watch project for file changes and rebuild with local server
 clean: ## Clean project
 	rm -rf $(DST_DIR)
 
-.PHONY: help package build clean
+.PHONY: help build package serve clean
 
 #
 # -------------------------------------------------------------
