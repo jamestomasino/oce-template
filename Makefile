@@ -71,7 +71,7 @@ serve: build ## Watch project for file changes and rebuild with local server
 		n=$${n%.html}; \
 		printf "<a href=\"%s\">%s</a><br>\\n" "$$slide" "$$n" >> index.html; \
 	done
-	bash -c "trap 'kill %1; rm -f index.html' EXIT; python3 -m http.server $(PORT) & ag -p .gitignore -l | entr make build"
+	$(MUTE)bash -c "trap 'kill %1; rm -f index.html' EXIT; python3 -m http.server $(PORT) & ag -p .gitignore -l | entr make build"
 
 clean: ## Clean project
 	rm -rf $(DST_DIR)
