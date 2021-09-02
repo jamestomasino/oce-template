@@ -31,11 +31,15 @@ DST_SLIDEJS_FILES := $(SRC_SLIDEJS_FILES:$(SRC_DIR)/slides/%.js=$(DST_DIR)/js/sl
 SRC_SASS_FILES != find $(SRC_DIR)/scss/ -regex '[^_]*.scss'
 DST_CSS_FILES := $(SRC_SASS_FILES:$(SRC_DIR)/scss/%.scss=$(DST_DIR)/css/%.css)
 
-# fonts
+# global js
+SRC_JS_FILES != find $(SRC_DIR)/js
+DST_JS_FILES := $(SRC_JS_FILES:$(SRC_DIR)/js/%=$(DST_DIR)/js/%)
+
+# global images
 SRC_IMAGES_FILES != find $(SRC_DIR)/images
 DST_IMAGES_FILES := $(SRC_IMAGES_FILES:$(SRC_DIR)/images/%=$(DST_DIR)/images/%)
 
-# fonts
+# global fonts
 SRC_FONTS_FILES != find $(SRC_DIR)/fonts -name '*.woff2'
 DST_FONTS_FILES := $(SRC_FONTS_FILES:$(SRC_DIR)/fonts/%.woff2=$(DST_DIR)/fonts/%.woff2)
 
@@ -49,7 +53,7 @@ help:
 	| sed -n 's/^\(.*\): \(.*\)#\(.*\)/  \1|-\3/p' \
 	| column -t  -s '|'
 
-build: $(NODE_MODULES) $(DST_JS_FILES) $(DST_CSS_FILES) $(DST_SLIDEHTML_FILES) $(DST_SLIDEJPG_FILES) $(DST_SLIDEPDF_FILES) $(DST_FONTS_FILES) $(DST_IMAGES_FILES) $(DST_SLIDEJS_FILES) ## Build all files to output folder
+build: $(NODE_MODULES) $(DST_JS_FILES) $(DST_CSS_FILES) $(DST_SLIDEHTML_FILES) $(DST_SLIDEJPG_FILES) $(DST_SLIDEPDF_FILES) $(DST_FONTS_FILES) $(DST_IMAGES_FILES) $(DST_SLIDEJS_FILES) $(DST_JS_FILES) ## Build all files to output folder
 
 package: $(current_dir).zip ## Prepare zip package for OCE upload
 
@@ -75,6 +79,10 @@ $(DST_DIR)/%.html: $(SRC_DIR)/slides/%.html $(SRC_DIR)/includes/**/*
 	m4 $(SRC_DIR)/macros $< > $@
 
 $(DST_DIR)/js/slides/%.js: $(SRC_DIR)/slides/%.js $(SRC_DIR)/includes/**/*
+	$(mkdir)
+	m4 $(SRC_DIR)/macros $< > $@
+
+$(DST_DIR)/js/%.js: $(SRC_DIR)/js/%.js $(SRC_DIR)/includes/**/*
 	$(mkdir)
 	m4 $(SRC_DIR)/macros $< > $@
 
