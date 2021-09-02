@@ -64,7 +64,7 @@ serve: build ## Watch project for file changes and rebuild with local server
 	@rm -f index.html
 	@touch index.html
 	@for slide in $(DST_DIR)/*.html; do \
-		n=$${slide#public/}; \
+		n=$${slide#$(DST_DIR)/}; \
 		n=$${n%.html}; \
 		printf "<a href=\"%s\">%s</a><br>\\n" "$$slide" "$$n" >> index.html; \
 	done
