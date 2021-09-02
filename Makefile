@@ -90,8 +90,7 @@ $(DST_DIR)/images/%: $(SRC_DIR)/images/%
 	$(imagemin) $< > $@
 
 $(current_dir).zip: build
-	cd $(DST_DIR)
-	zip -9 -r "../$(current_dir).zip" *.html *.jpg css/ images/ js/
+	cd $(DST_DIR) && zip -9 -r "$(current_dir).zip" *.html *.jpg css/ images/ js/ fonts/
 
 $(NODE_MODULES): package.json yarn.lock
 	yarn install --modules-folder ./$(NODE_MODULES)
