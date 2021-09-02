@@ -1,0 +1,2 @@
+changecom(`/*', `*/')dnl
+define(__brand, `Brand Name<sup>&reg;</sup> (Generic)')dnl
