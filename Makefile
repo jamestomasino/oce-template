@@ -26,6 +26,8 @@ SRC_SLIDEPDF_FILES != find $(SRC_DIR)/slides -name '*.pdf'
 DST_SLIDEPDF_FILES := $(SRC_SLIDEPDF_FILES:$(SRC_DIR)/slides/%.pdf=$(DST_DIR)/%.pdf)
 SRC_SLIDEJS_FILES != find $(SRC_DIR)/slides -name '*.js'
 DST_SLIDEJS_FILES := $(SRC_SLIDEJS_FILES:$(SRC_DIR)/slides/%.js=$(DST_DIR)/js/slides/%.js)
+SRC_SLIDESASS_FILES != find $(SRC_DIR)/slides -regex '[^_]*.scss'
+DST_SLIDECSS_FILES := $(SRC_SLIDESASS_FILES:$(SRC_DIR)/slides/%.scss=$(DST_DIR)/css/slides/%.css)
 
 # Sass source files & css transpiled files
 SRC_SASS_FILES != find $(SRC_DIR)/scss/ -regex '[^_]*.scss'
@@ -53,7 +55,7 @@ help:
 	| sed -n 's/^\(.*\): \(.*\)#\(.*\)/  \1|-\3/p' \
 	| column -t  -s '|'
 
-build: $(NODE_MODULES) $(DST_JS_FILES) $(DST_CSS_FILES) $(DST_SLIDEHTML_FILES) $(DST_SLIDEJPG_FILES) $(DST_SLIDEPDF_FILES) $(DST_FONTS_FILES) $(DST_IMAGES_FILES) $(DST_SLIDEJS_FILES) $(DST_JS_FILES) ## Build all files to output folder
+build: $(NODE_MODULES) $(DST_JS_FILES) $(DST_CSS_FILES) $(DST_SLIDEHTML_FILES) $(DST_SLIDEJPG_FILES) $(DST_SLIDEPDF_FILES) $(DST_FONTS_FILES) $(DST_IMAGES_FILES) $(DST_SLIDEJS_FILES) $(DST_JS_FILES) $(DST_SLIDECSS_FILES) ## Build all files to output folder
 
 package: $(current_dir).zip ## Prepare zip package for OCE upload
 
@@ -97,6 +99,10 @@ $(DST_DIR)/%.pdf: $(SRC_DIR)/slides/%.pdf
 	cp $< $@
 
 $(DST_DIR)/css/%.css: $(SRC_DIR)/scss/%.scss
+	$(mkdir)
+	$(sass) $< $@
+
+$(DST_DIR)/css/slides/%.css: $(SRC_DIR)/slides/%.scss
 	$(mkdir)
 	$(sass) $< $@
 
