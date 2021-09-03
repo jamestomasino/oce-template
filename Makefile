@@ -101,11 +101,11 @@ $(DST_DIR)/%.pdf: $(SRC_DIR)/slides/%.pdf
 
 $(DST_DIR)/css/slides/%.css: $(SRC_DIR)/slides/%.scss
 	$(mkdir)
-	$(sass) $< $@
+	$(sass) --style=compressed $< $@
 
 $(DST_DIR)/css/%.css: $(SRC_DIR)/scss/%.scss $(SRC_SASSINCLUDE_FILES)
 	$(mkdir)
-	$(sass) $< $@
+	$(sass) --style=compressed $< $@
 
 $(DST_DIR)/fonts/%.woff2: $(SRC_DIR)/fonts/%.woff2
 	$(mkdir)
