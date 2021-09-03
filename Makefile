@@ -56,10 +56,7 @@ help:
 	| sed -n 's/^\(.*\): \(.*\)#\(.*\)/  \1|-\3/p' \
 	| column -t  -s '|'
 
-build: $(NODE_MODULES) $(DST_JS_FILES) $(DST_CSS_FILES) $(DST_SLIDEHTML_FILES) \
-	$(DST_SLIDEJPG_FILES) $(DST_SLIDEPDF_FILES) $(DST_FONTS_FILES) \
-	$(DST_IMAGES_FILES) $(DST_SLIDEJS_FILES) $(DST_JS_FILES) \
-	$(DST_SLIDECSS_FILES) ## Build all files to output folder
+build: $(NODE_MODULES) $(DST_JS_FILES) $(DST_CSS_FILES) $(DST_SLIDEHTML_FILES) $(DST_SLIDEJPG_FILES) $(DST_SLIDEPDF_FILES) $(DST_FONTS_FILES) $(DST_IMAGES_FILES) $(DST_SLIDEJS_FILES) $(DST_JS_FILES) $(DST_SLIDECSS_FILES) ## Build all files to output folder
 
 package: $(current_dir).zip ## Prepare zip package for OCE upload
 
@@ -96,11 +93,11 @@ $(DST_DIR)/js/%.js: $(SRC_DIR)/js/%.js $(SRC_DIR)/includes/**/*
 
 $(DST_DIR)/%.jpg: $(SRC_DIR)/slides/%.jpg
 	$(mkdir)
-	$(imagemin) $< > $@
+	$(imagemin) --plugin.mozjpeg.quality=60 $< > $@
 
 $(DST_DIR)/%.pdf: $(SRC_DIR)/slides/%.pdf
 	$(mkdir)
-	cp $< $@
+	$(copy)
 
 $(DST_DIR)/css/slides/%.css: $(SRC_DIR)/slides/%.scss
 	$(mkdir)
@@ -112,11 +109,11 @@ $(DST_DIR)/css/%.css: $(SRC_DIR)/scss/%.scss $(SRC_SASSINCLUDE_FILES)
 
 $(DST_DIR)/fonts/%.woff2: $(SRC_DIR)/fonts/%.woff2
 	$(mkdir)
-	cp $< $@
+	$(copy)
 
 $(DST_DIR)/images/%: $(SRC_DIR)/images/%
 	$(mkdir)
-	$(imagemin) $< > $@
+	$(imagemin) --plugin.pngquant.quality={0.1,0.2} --plugin.mozjpeg.quality=60 $< > $@
 
 $(current_dir).zip: build
 	cd $(DST_DIR) && zip -9 -r "$(current_dir).zip" *.html *.jpg css/ images/ js/ fonts/
