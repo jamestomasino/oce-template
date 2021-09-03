@@ -81,15 +81,15 @@ clean: ## Clean project
 
 $(DST_DIR)/%.html: $(SRC_DIR)/slides/%.html $(SRC_DIR)/includes/**/*
 	$(mkdir)
-	m4 $(SRC_DIR)/macros $< > $@
+	m4 --prefix-builtins $(SRC_DIR)/macros $< > $@
 
 $(DST_DIR)/js/slides/%.js: $(SRC_DIR)/slides/%.js $(SRC_DIR)/includes/**/*
 	$(mkdir)
-	m4 $(SRC_DIR)/macros $< > $@
+	m4 --prefix-builtins $(SRC_DIR)/macros $< > $@
 
 $(DST_DIR)/js/%.js: $(SRC_DIR)/js/%.js $(SRC_DIR)/includes/**/*
 	$(mkdir)
-	m4 $(SRC_DIR)/macros $< > $@
+	m4 --prefix-builtins $(SRC_DIR)/macros $< > $@
 
 $(DST_DIR)/%.jpg: $(SRC_DIR)/slides/%.jpg
 	$(mkdir)

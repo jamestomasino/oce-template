@@ -1,2 +1,2 @@
-changecom(`/*', `*/')dnl
-define(__brand, `Brand Name<sup>&reg;</sup> (Generic)')dnl
+m4_changecom(`/*', `*/')m4_dnl
+m4_define(__brand, `Brand Name<sup>&reg;</sup> (Generic)')m4_dnl
