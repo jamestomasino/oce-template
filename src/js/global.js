@@ -1,3 +1,21 @@
+/*
+ * Create fake CLMPlayer object if in testing to handle
+ * basic navigation.
+ */
+setTimeout(() => {
+  if (!window.CLMPlayer) {
+    window.CLMPlayer = {
+      gotoSlide: function (presentation, slide) {
+        if (presentation) {
+          document.location = '/public/' + presentation + '.pdf'
+        } else {
+          document.location = '/public/' + slide
+        }
+      }
+    }
+  }
+}, 1000)
+
 var btn_pi = document.getElementById('pi');
 var btn_access = document.getElementById('access');
 var btn_isi = document.getElementById('isi');
